@@ -1,0 +1,43 @@
+name: CICD-Pipelin
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          terraform_wrapper: false
+          
+      - run: terraform init
+        working-directory: ./infrastructure/
+
+      - run: terraform apply -auto-approve
+        working-directory: ./infrastructure/
+        
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+         python-version: 3.6
+      # install dependencies
+      - name: python install
+        working-directory: ./application/
+        run: |
+         sudo apt install python3-venv
+         python -m venv --copies antenv
+         source antenv/bin/activate
+         pip install setuptools
+         pip install -r requirements.txt
+      # deploy web app
+      - uses: azure/webapps-deploy@v2
+        with:
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ./application/
+
