@@ -44,4 +44,5 @@ jobs:
           app-name: doaAzWebAppAlex
           slot-name: slotOne
           package: ./application/
+          startup-command: startup.sh
 
