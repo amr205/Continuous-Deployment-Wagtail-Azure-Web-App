@@ -42,7 +42,7 @@ resource "azurerm_app_service" "azureWagtail" {
   app_service_plan_id = azurerm_app_service_plan.azureWagtail.id
 
   site_config {
-    python_version = "3.8"
+    python_version = "3.4"
   }
 }
 
@@ -54,6 +54,6 @@ resource "azurerm_app_service_slot" "azureWagtail" {
   app_service_name    = azurerm_app_service.azureWagtail.name
 
   site_config {
-    python_version = "3.8"
+    python_version = "3.4"
   }
 }
