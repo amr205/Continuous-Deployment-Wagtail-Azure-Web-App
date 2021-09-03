@@ -42,14 +42,18 @@ resource "azurerm_app_service" "azureWagtail" {
   app_service_plan_id = azurerm_app_service_plan.azureWagtail.id
 
   site_config {
-    python_version = "3.4"
+    python_version = "3.8"
   }
 }
 
 resource "azurerm_app_service_slot" "azureWagtail" {
-  name                = "doaAzWebAppAlexSlotOne"
+  name                = "slotOne"
   location            = azurerm_resource_group.azureWagtail.location
   resource_group_name = azurerm_resource_group.azureWagtail.name
   app_service_plan_id = azurerm_app_service_plan.azureWagtail.id
   app_service_name    = azurerm_app_service.azureWagtail.name
+
+  site_config {
+    python_version = "3.8"
+  }
 }
