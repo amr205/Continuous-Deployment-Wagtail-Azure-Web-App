@@ -35,10 +35,12 @@ jobs:
          source antenv/bin/activate
          pip install setuptools
          pip install -r requirements.txt
+      
       # deploy web app
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
       - uses: azure/webapps-deploy@v2
         with:
           app-name: doaAzWebAppAlex

@@ -61,3 +61,4 @@ resource "azurerm_app_service_slot" "azureWagtail" {
     python_version = "3.4"
   }
 }
+
